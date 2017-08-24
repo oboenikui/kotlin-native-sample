@@ -5,10 +5,16 @@ konanInterop {
         includeDirs '/usr/local/include'
     }
 }
-
 konanArtifacts {
     OpenCV {
         useInterop 'opencv'
-        linkerOpts "-L/usr/local/Cellar/opencv3/3.3.0_1/lib -lopencv_dnn -lopencv_ml -lopencv_objdetect -lopencv_shape -lopencv_stitching -lopencv_superres -lopencv_videostab -lopencv_calib3d -lopencv_features2d -lopencv_highgui -lopencv_videoio -lopencv_imgcodecs -lopencv_video -lopencv_photo -lopencv_imgproc -lopencv_flann -lopencv_core"
+        linkerOpts "pkg-config --libs opencv".execute().text.trim()
+    }
+}
+
+task cleanKonan(type: Delete) {
+    println("${projectDir}/build/konan/bin/*")
+    delete fileTree("build/konan/bin") {
+        include '*'
     }
 }

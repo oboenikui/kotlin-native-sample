@@ -1,2 +1,2 @@
-headers = stdio.h stdlib.h string.h
+headers = stdio.h stdlib.h string.h unistd.h
 excludeDependentModules.osx = true

@@ -1,3 +1,4 @@
+import kotlinx.cinterop.*
 import stdio.*
 
 /*
@@ -17,5 +18,35 @@ import stdio.*
  */
 
 fun main(args: Array<String>) {
-    printf("Hello world!%x%x")
+    memScoped {
+        val cwd = allocArray<ByteVar>(1024)
+        println(getcwd(cwd, 1024)?.toKString())
+    }
+    try {
+        goodArrayAccess()
+    } catch (e: Throwable) {
+        println(e.message ?: "something occurred")
+    }
+    try {
+        badArrayAccess()
+    } catch (e: Throwable) {
+        println(e.message ?: "something occurred")
+    }
+}
+
+fun badArrayAccess() {
+    memScoped {
+        val arr = intArrayOf(1, 2, 3)
+                .toCValues()
+                .getPointer(this)
+        for (i in 0..3)
+            println(arr[i])
+    }
+
+}
+
+fun goodArrayAccess() {
+    val arr = arrayOf(1, 2, 3)
+    for (i in 0..3)
+        println(arr[i])
 }

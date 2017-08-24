@@ -1,11 +1,19 @@
 apply plugin: 'konan'
 
 konanInterop {
-    stdio { }
+    stdio {
+    }
 }
 
 konanArtifacts {
-    CsvParser {
+    HelloWorld {
         useInterop 'stdio'
+    }
+}
+
+task cleanKonan(type: Delete) {
+    println("${projectDir}/build/konan/bin/*")
+    delete fileTree("build/konan/bin") {
+        include '*'
     }
 }
