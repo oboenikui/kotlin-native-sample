@@ -25,12 +25,9 @@ fun main(args: Array<String>) {
 }
 
 fun faceDetect(img: CPointer<IplImage>, storage: CPointer<CvMemStorage>, cascade: CPointer<CvHaarClassifierCascade>) {
-
-    memScoped {
-        val faces = cvHaarDetectObjects(img, cascade, storage, 1.2, 2, CV_HAAR_DO_CANNY_PRUNING, cvSize(12, 12), cvSize(256, 256))
-        for (i in 0 until (faces?.pointed?.total ?: 0)) {
-            val faceRect = cvGetSeqElem(faces, i)!!.reinterpret<CvRect>()[0]
-            cvRectangle(img, cvPoint(faceRect.x, faceRect.y), cvPoint(faceRect.x + faceRect.width, faceRect.y + faceRect.height), cvScalar(255.0, 0.0, 0.0, 0.0), 3, 1, 0)
-        }
+    val faces = cvHaarDetectObjects(img, cascade, storage, 1.2, 2, CV_HAAR_DO_CANNY_PRUNING, cvSize(12, 12), cvSize(256, 256))
+    for (i in 0 until (faces?.pointed?.total ?: 0)) {
+        val faceRect = cvGetSeqElem(faces, i)!!.reinterpret<CvRect>()[0]
+        cvRectangle(img, cvPoint(faceRect.x, faceRect.y), cvPoint(faceRect.x + faceRect.width, faceRect.y + faceRect.height), cvScalar(255.0, 0.0, 0.0, 0.0), 3, 1, 0)
     }
 }
