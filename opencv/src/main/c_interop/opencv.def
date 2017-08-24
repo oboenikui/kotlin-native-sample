@@ -1,0 +1,3 @@
+headers = stdio.h stdlib.h string.h opencv/cv.h opencv2/opencv_modules.hpp opencv/highgui.h
+headerFilter = opencv/** opencv2/**
+excludedFunctions = _cvtsh_ss
