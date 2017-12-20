@@ -1,19 +1,14 @@
 apply plugin: 'konan'
 
-konanInterop {
-    stdio {
-    }
-}
-
 konanArtifacts {
-    HelloWorld {
-        useInterop 'stdio'
-    }
-}
 
-task cleanKonan(type: Delete) {
-    println("${projectDir}/build/konan/bin/*")
-    delete fileTree("build/konan/bin") {
-        include '*'
+    interop('stdio') {
+        defFile "src/main/c_interop/stdio.def"
+    }
+
+    program('HelloWorld') {
+        libraries {
+            artifact 'stdio'
+        }
     }
 }

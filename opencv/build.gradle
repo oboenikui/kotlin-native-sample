@@ -1,20 +1,15 @@
 apply plugin: 'konan'
 
-konanInterop {
-    opencv {
+konanArtifacts {
+    interop('opencv') {
+        defFile 'src/main/c_interop/opencv.def'
         includeDirs '/usr/local/include'
     }
-}
-konanArtifacts {
-    OpenCV {
-        useInterop 'opencv'
-        linkerOpts "pkg-config --libs opencv".execute().text.trim()
-    }
-}
 
-task cleanKonan(type: Delete) {
-    println("${projectDir}/build/konan/bin/*")
-    delete fileTree("build/konan/bin") {
-        include '*'
+    program('OpenCV') {
+        libraries {
+            artifact 'opencv'
+        }
+        linkerOpts "pkg-config --libs opencv".execute().text.trim()
     }
 }
